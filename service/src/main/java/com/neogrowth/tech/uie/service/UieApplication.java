@@ -16,8 +16,7 @@ import com.neogrowth.tech.uie.core.config.UieConfiguration;
 import com.neogrowth.tech.uie.service.resources.CategoryResource;
 import com.neogrowth.tech.uie.service.resources.TestResource;
 
-public class UieApplication extends Application<UieConfiguration> implements
-		Managed {
+public class UieApplication extends Application<UieConfiguration> {
 
 	public static void main(String[] args) throws Exception {
 		new UieApplication().run(args);
@@ -37,7 +36,7 @@ public class UieApplication extends Application<UieConfiguration> implements
 	public void run(UieConfiguration configuration, Environment environment) {
 
 		// register service for shutdown events
-		environment.lifecycle().manage(this);
+		// environment.lifecycle().manage(this);
 
 		// final UserDAO dao = jdbi.onDemand(UserDAO.class);
 		// environment.jersey().register(new UserResource(dao));
@@ -51,7 +50,8 @@ public class UieApplication extends Application<UieConfiguration> implements
 		TestResource testResource = new TestResource(dbi);
 		environment.jersey().register(testResource);
 
-		CategoryResource categoryResource = new CategoryResource(ingestor.getInstance(CategoryApi.class));
+		CategoryResource categoryResource = new CategoryResource(
+				ingestor.getInstance(CategoryApi.class));
 		environment.jersey().register(categoryResource);
 
 		// Health check
