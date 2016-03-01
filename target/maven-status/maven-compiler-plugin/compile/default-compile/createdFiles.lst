@@ -1,0 +1,5 @@
+com/neogrowth/tech/uie/UieConfiguration.class
+com/neogrowth/tech/uie/resources/TestResource.class
+com/neogrowth/tech/uie/db/Category.class
+com/neogrowth/tech/uie/DBIHandler.class
+com/neogrowth/tech/uie/UieApplication.class
