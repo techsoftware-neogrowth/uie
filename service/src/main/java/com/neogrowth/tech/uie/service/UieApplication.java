@@ -2,7 +2,6 @@ package com.neogrowth.tech.uie.service;
 
 import io.dropwizard.Application;
 import io.dropwizard.jdbi.DBIHealthCheck;
-import io.dropwizard.lifecycle.Managed;
 import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
 
@@ -12,8 +11,10 @@ import com.google.inject.Guice;
 import com.google.inject.Injector;
 import com.neogrowth.tech.uie.core.AppInjector;
 import com.neogrowth.tech.uie.core.api.CategoryApi;
+import com.neogrowth.tech.uie.core.api.ManualDataCollectionApi;
 import com.neogrowth.tech.uie.core.config.UieConfiguration;
 import com.neogrowth.tech.uie.service.resources.CategoryResource;
+import com.neogrowth.tech.uie.service.resources.FosResource;
 import com.neogrowth.tech.uie.service.resources.TestResource;
 
 public class UieApplication extends Application<UieConfiguration> {
@@ -53,6 +54,11 @@ public class UieApplication extends Application<UieConfiguration> {
 		CategoryResource categoryResource = new CategoryResource(
 				ingestor.getInstance(CategoryApi.class));
 		environment.jersey().register(categoryResource);
+
+		FosResource fosResource = new FosResource(
+				ingestor.getInstance(CategoryApi.class),
+				ingestor.getInstance(ManualDataCollectionApi.class));
+		environment.jersey().register(fosResource);
 
 		// Health check
 		DBIHealthCheck dbiHealthCheck = new DBIHealthCheck(dbi,

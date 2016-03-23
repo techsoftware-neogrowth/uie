@@ -26,7 +26,7 @@ public interface CategoryDao {
 	@SqlUpdate("INSERT INTO category (name, description) "
 			+ "values (:name, :description)")
 	@GetGeneratedKeys
-	public long addCategory(@Bind("name") String name,
+	public long add(@Bind("name") String name,
 			@Bind("description") String categoryDescription);
 
 	@SqlQuery("select * from category")

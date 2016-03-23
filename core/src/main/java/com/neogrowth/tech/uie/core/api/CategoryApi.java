@@ -8,7 +8,7 @@ import com.neogrowth.tech.uie.data.Category;
 @ImplementedBy(CategoryApiImpl.class)
 public interface CategoryApi {
 
-	public long createCategory(String categoryName, String categoryDescription);
+	public long create(String categoryName, String categoryDescription);
 
 	public List<Category> getAll();
 

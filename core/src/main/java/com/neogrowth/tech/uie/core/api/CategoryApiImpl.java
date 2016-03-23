@@ -19,12 +19,12 @@ public class CategoryApiImpl implements CategoryApi {
 		this.dbi = dbi;
 	}
 
-	public long createCategory(String categoryName, String categoryDescription) {
+	public long create(String categoryName, String categoryDescription) {
 		log.info("Creating category :" + categoryName);
 		Category category = new Category(categoryName, categoryDescription);
 		CategoryDao dao = dbi.onDemand(CategoryDao.class);
 		long id = dao
-				.addCategory(category.getName(), category.getDescription());
+				.add(category.getName(), category.getDescription());
 		log.info("category :" + categoryName + " created successfully");
 		return id;
 	}

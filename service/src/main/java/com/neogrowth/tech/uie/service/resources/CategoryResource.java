@@ -31,7 +31,7 @@ public class CategoryResource {
 	@Path("/{category}")
 	public long addCategory(@PathParam("category") String categoryName,
 			@QueryParam("desc") String categoryDescription) {
-		long category = api.createCategory(categoryName, categoryDescription);
+		long category = api.create(categoryName, categoryDescription);
 		return category;
 	}
 
