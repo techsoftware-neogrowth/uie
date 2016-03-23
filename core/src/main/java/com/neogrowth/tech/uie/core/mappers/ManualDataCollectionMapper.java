@@ -15,19 +15,19 @@ public class ManualDataCollectionMapper implements
 	@Override
 	public ManualDataCollection map(int index, ResultSet r, StatementContext ctx)
 			throws SQLException {
-		// int categoryId = Integer.parseInt(categoryidString);
-		Category category = new Category("Apparel", null);
-		category.setId(1);
+		Category category = new Category(r.getInt("cat$id_category"),
+				r.getString("cat$name"), r.getString("cat$description"));
+		
 		ManualDataCollection manualDataCollection = new ManualDataCollection(
-				r.getInt("idmanual_data_collection"),
+				r.getInt("id_manual_data_collection"),
 				r.getString("merchant_name"), r.getString("contact_person"),
 				r.getString("telephone"), r.getString("email"), category,
-				r.getString("photograph"), r.getString("appointment_time"),
+				r.getString("photograph_url"), r.getString("appointment_time"),
 				r.getString("address"), r.getString("address_locality"),
 				r.getString("city"), r.getString("state"),
-				r.getString("country"), r.getInt("pin_code"),
-				r.getDouble("lat"), r.getDouble("lng"),
-				r.getInt("category_id_category"));
+				r.getString("country"), r.getInt("pincode"),
+				r.getDouble("latitude"), r.getDouble("longitude"),
+				r.getInt("fk_id_category"));
 
 		return manualDataCollection;
 	}

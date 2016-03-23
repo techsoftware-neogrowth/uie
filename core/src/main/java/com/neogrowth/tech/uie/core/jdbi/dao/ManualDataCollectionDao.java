@@ -18,29 +18,32 @@ public interface ManualDataCollectionDao {
 	@SqlQuery("select * from manual_data_collection")
 	public List<ManualDataCollection> getAll();
 
-	@SqlQuery("select * from manual_data_collection where idmanual_data_collection > :startIndex limit :limit")
+	@SqlQuery("select * from manual_data_collection where id_manual_data_collection > :startIndex limit :limit")
 	public List<ManualDataCollection> getSome(
 			@Bind("startIndex") int startIndex, @Bind("limit") int limit);
 
-	@SqlQuery("select * from manual_data_collection where idmanual_data_collection = :id")
+	@SqlQuery("select mdc.*,cat.id_category as cat$id_category, cat.name as cat$name, "
+			+ "cat.description as cat$description from manual_data_collection mdc "
+			+ "left join category cat on mdc.fk_id_category = cat.id_category "
+			+ "where mdc.id_manual_data_collection=:id")
 	public ManualDataCollection get(@Bind("id") long id);
 
 	@SqlUpdate("INSERT INTO manual_data_collection (merchant_name, contact_person, telephone, "
-			+ "email, fk_idcategory, photograph, appointment_time, address, address_locality, "
-			+ "city, state, country, pin_code, lat, lng, category_id_category) "
-			+ "values (:mdc.merchantName, :mdc.contactPerson, :mdc.telephone, :mdc.email, null, "
+			+ "email, photograph_url, appointment_time, address, address_locality, "
+			+ "city, state, country, pincode, latitude, longitude, fk_id_category) "
+			+ "values (:mdc.merchantName, :mdc.contactPerson, :mdc.telephone, :mdc.email, "
 			+ ":mdc.photographUrl, :mdc.appointmentTime, :mdc.address, :mdc.addressLocality, "
-			+ ":mdc.city, :mdc.state, :mdc.country, :mdc.pincode, :mdc.latittude, :mdc.longitute,"
-			+ ":mdc.categoryIdCategory)")
+			+ ":mdc.city, :mdc.state, :mdc.country, :mdc.pincode, :mdc.latitude, :mdc.longitude,"
+			+ ":mdc.fkIdCategory)")
 	@GetGeneratedKeys
 	public int add(@BindBean("mdc") ManualDataCollection manualDataCollection);
 
 	@SqlUpdate("update manual_data_collection set merchant_name = :mdc.merchantName, "
 			+ "contact_person = :mdc.contactPerson, telephone=:mdc.telephone, email=:mdc.email,"
-			+ "photograph=:mdc.photographUrl, appointment_time= :mdc.appointmentTime, address=:mdc.address,"
+			+ "photograph_url=:mdc.photographUrl, appointment_time= :mdc.appointmentTime, address=:mdc.address,"
 			+ "address_locality=:mdc.addressLocality, city=:mdc.city, state=:mdc.state, country=:mdc.country,"
-			+ "pin_code=:mdc.pincode, lat=:mdc.latittude, lng=:mdc.longitute, category_id_category=:mdc.categoryIdCategory "
-			+ "where idmanual_data_collection = :mdc.id")
+			+ "pincode=:mdc.pincode, latitude=:mdc.latitude, longitude=:mdc.longitude, "
+			+ "fk_id_category=:mdc.fkIdCategory where id_manual_data_collection = :mdc.id")
 	public int update(@BindBean("mdc") ManualDataCollection manualDataCollection);
 
 }

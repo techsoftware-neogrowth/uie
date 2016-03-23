@@ -19,6 +19,7 @@
 		<guice.version>3.0</guice.version>
 		<lombok.version>1.16.6</lombok.version>
 		<joda.time.version>2.9.2</joda.time.version>
+		<jdbi.folder.version>1.0</jdbi.folder.version>
 	</properties>
 
 	<dependencies>

@@ -1,16 +1,24 @@
 package com.neogrowth.tech.uie.data;
 
+import com.github.rkmk.annotations.ColumnName;
+import com.github.rkmk.annotations.OneToOne;
+import com.github.rkmk.annotations.PrimaryKey;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
 @Data
 @AllArgsConstructor
 public class ManualDataCollection {
+
+	@PrimaryKey
+	@ColumnName("id_manual_data_collection")
 	private int id;
 	private String merchantName;
 	private String contactPerson;
 	private String telephone;
 	private String email;
+	@OneToOne("cat")
 	private Category category;
 	private String photographUrl;
 	private String appointmentTime;
@@ -20,11 +28,9 @@ public class ManualDataCollection {
 	private String state;
 	private String country;
 	private int pincode;
-	private double latittude;
-	private double longitute;
-	private int categoryIdCategory;
-
-	// private boolean isOldLead;
+	private double latitude;
+	private double longitude;
+	private int fkIdCategory;
 
 	public ManualDataCollection() {
 
