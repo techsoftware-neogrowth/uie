@@ -61,9 +61,9 @@ public class FosResource {
 	@Path("/{id}")
 	public Response update(@PathParam("id") int id,
 			ManualDataCollection collection) {
-		if (collection.getId() == 0 || collection.getId() == id) {
+		if (collection.getId() == 0) {
 			collection.setId(id);
-		} else {
+		} else if (collection.getId() != id) {
 			return Response.status(Response.Status.BAD_REQUEST).build();
 		}
 		int numberOfRowsChanged = manualDataCollectionApi.update(collection);
