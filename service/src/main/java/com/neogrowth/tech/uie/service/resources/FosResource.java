@@ -35,23 +35,21 @@ public class FosResource {
 	}
 
 	@GET
-	@Path("/get")
 	public List<ManualDataCollection> getAll(
-			@QueryParam("start_index") int startIndex,
-			@QueryParam("limit") int limit) {
-		System.out.println("start index:" + startIndex);
-		System.out.println("limit:" + limit);
-		return manualDataCollectionApi.getAll(startIndex, limit);
+			@QueryParam("current_position") int currentPosition,
+			@QueryParam("limit") int limit,
+			@QueryParam("skip_entries") int skipEntries) {
+		return manualDataCollectionApi.getAll(currentPosition, limit,
+				skipEntries);
 	}
 
 	@GET
-	@Path("/get/{id}")
+	@Path("/{id}")
 	public ManualDataCollection get(@PathParam("id") int id) {
 		return manualDataCollectionApi.get(id);
 	}
 
 	@POST
-	@Path("/add")
 	public Response addLead(ManualDataCollection collection) {
 		int id = manualDataCollectionApi.create(collection);
 		ManualDataCollection newcollection = get(id);
@@ -60,8 +58,14 @@ public class FosResource {
 	}
 
 	@PUT
-	@Path("/update")
-	public Response update(ManualDataCollection collection) {
+	@Path("/{id}")
+	public Response update(@PathParam("id") int id,
+			ManualDataCollection collection) {
+		if (collection.getId() == 0 || collection.getId() == id) {
+			collection.setId(id);
+		} else {
+			return Response.status(Response.Status.BAD_REQUEST).build();
+		}
 		int numberOfRowsChanged = manualDataCollectionApi.update(collection);
 		return Response.status(Response.Status.OK).entity(numberOfRowsChanged)
 				.build();

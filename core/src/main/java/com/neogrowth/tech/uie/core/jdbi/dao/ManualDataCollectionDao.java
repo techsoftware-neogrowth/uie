@@ -15,12 +15,21 @@ import com.neogrowth.tech.uie.data.ManualDataCollection;
 @RegisterMapper(ManualDataCollectionMapper.class)
 public interface ManualDataCollectionDao {
 
-	@SqlQuery("select * from manual_data_collection")
+	@SqlQuery("select mdc.*,cat.id_category as cat$id_category, cat.name as cat$name, cat.description as cat$description "
+			+ " from manual_data_collection mdc left join category cat on mdc.fk_id_category = cat.id_category")
 	public List<ManualDataCollection> getAll();
 
-	@SqlQuery("select * from manual_data_collection where id_manual_data_collection > :startIndex limit :limit")
+	@SqlQuery("select mdc.*,cat.id_category as cat$id_category, cat.name as cat$name, cat.description as cat$description "
+			+ "from manual_data_collection mdc left join category cat on mdc.fk_id_category = cat.id_category"
+			+ " where mdc.id_manual_data_collection >= :startIndex limit :limit")
 	public List<ManualDataCollection> getSome(
 			@Bind("startIndex") int startIndex, @Bind("limit") int limit);
+
+	@SqlQuery("select mdc.*,cat.id_category as cat$id_category, cat.name as cat$name, cat.description as cat$description "
+			+ "from manual_data_collection mdc left join category cat on mdc.fk_id_category = cat.id_category"
+			+ " where mdc.id_manual_data_collection >= :startIndex limit :limit offset :skipEntries")
+	public List<ManualDataCollection> getSome(@Bind("startIndex") int startIndex,@Bind("limit") int limit,
+			@Bind("skipEntries") int skipEntries);
 
 	@SqlQuery("select mdc.*,cat.id_category as cat$id_category, cat.name as cat$name, "
 			+ "cat.description as cat$description from manual_data_collection mdc "

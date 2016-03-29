@@ -18,15 +18,23 @@ public class ManualDataCollectionApiImpl implements ManualDataCollectionApi {
 	}
 
 	@Override
-	public List<ManualDataCollection> getAll(int startIndex, int limit) {
+	public List<ManualDataCollection> getAll(int startIndex, int limit,
+			int skipEntries) {
 		ManualDataCollectionDao manualDataCollectionDao = dbi
 				.onDemand(ManualDataCollectionDao.class);
+		System.out.println(" startIndex   "+startIndex);
+		System.out.println("  skipEntries    "+skipEntries);
+		System.out.println(" limit "+limit);
 		List<ManualDataCollection> collection = null;
 		if (startIndex == 0 && limit == 0) {
 			collection = manualDataCollectionDao.getAll();
+		} else if (skipEntries != 0) {
+			collection = manualDataCollectionDao.getSome(startIndex, limit,
+					skipEntries);
 		} else {
 			collection = manualDataCollectionDao.getSome(startIndex, limit);
 		}
+		System.out.println(" collection   " + collection);
 		return collection;
 	}
 

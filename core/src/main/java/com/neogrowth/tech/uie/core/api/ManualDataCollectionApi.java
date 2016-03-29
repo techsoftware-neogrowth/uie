@@ -10,7 +10,8 @@ public interface ManualDataCollectionApi {
 
 	public ManualDataCollection get(int id);
 
-	public List<ManualDataCollection> getAll(int startIndex, int limit);
+	public List<ManualDataCollection> getAll(int startIndex, int limit,
+			int skipEntries);
 
 	public int create(ManualDataCollection collection);
 
