@@ -1,17 +1,14 @@
 package com.neogrowth.tech.uie.core;
 
 import io.dropwizard.db.DataSourceFactory;
+import io.dropwizard.setup.Environment;
 
 import javax.sql.DataSource;
-
-import io.dropwizard.setup.Environment;
 
 import org.skife.jdbi.v2.DBI;
 
 import com.google.inject.AbstractModule;
 import com.google.inject.Provides;
-import com.neogrowth.tech.uie.core.api.CategoryApi;
-import com.neogrowth.tech.uie.core.api.CategoryApiImpl;
 import com.neogrowth.tech.uie.core.config.UieConfiguration;
 
 public class AppInjector extends AbstractModule {

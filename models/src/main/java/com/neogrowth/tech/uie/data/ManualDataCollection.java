@@ -1,11 +1,11 @@
 package com.neogrowth.tech.uie.data;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+
 import com.github.rkmk.annotations.ColumnName;
 import com.github.rkmk.annotations.OneToOne;
 import com.github.rkmk.annotations.PrimaryKey;
-
-import lombok.AllArgsConstructor;
-import lombok.Data;
 
 @Data
 @AllArgsConstructor
@@ -30,7 +30,7 @@ public class ManualDataCollection {
 	private int pincode;
 	private double latitude;
 	private double longitude;
-	private int fkIdCategory;
+	private transient int fkIdCategory;
 
 	public ManualDataCollection() {
 

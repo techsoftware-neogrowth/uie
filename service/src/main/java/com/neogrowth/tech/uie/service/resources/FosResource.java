@@ -23,13 +23,11 @@ import com.neogrowth.tech.uie.data.ManualDataCollection;
 @Produces(MediaType.APPLICATION_JSON)
 public class FosResource {
 
-	private CategoryApi categoryApi;
 	private ManualDataCollectionApi manualDataCollectionApi;
 
 	@Inject
 	public FosResource(CategoryApi categoryApi,
 			ManualDataCollectionApi manualDataCollectionApi) {
-		this.categoryApi = categoryApi;
 		this.manualDataCollectionApi = manualDataCollectionApi;
 
 	}
@@ -51,6 +49,8 @@ public class FosResource {
 
 	@POST
 	public Response addLead(ManualDataCollection collection) {
+		int categoryId = collection.getCategory().getId();
+		collection.setFkIdCategory(categoryId);
 		int id = manualDataCollectionApi.create(collection);
 		ManualDataCollection newcollection = get(id);
 		return Response.status(Response.Status.CREATED).entity(newcollection)
@@ -66,8 +66,15 @@ public class FosResource {
 		} else if (collection.getId() != id) {
 			return Response.status(Response.Status.BAD_REQUEST).build();
 		}
+		int categoryId = collection.getCategory().getId();
+		collection.setFkIdCategory(categoryId);
 		int numberOfRowsChanged = manualDataCollectionApi.update(collection);
-		return Response.status(Response.Status.OK).entity(numberOfRowsChanged)
-				.build();
+		if (numberOfRowsChanged > 0) {
+			ManualDataCollection newcollection = get(id);
+			return Response.status(Response.Status.OK).entity(newcollection)
+					.build();
+		} else {
+			return Response.status(Response.Status.NOT_MODIFIED).build();
+		}
 	}
 }
