@@ -11,11 +11,13 @@ import com.google.inject.Guice;
 import com.google.inject.Injector;
 import com.neogrowth.tech.uie.core.AppInjector;
 import com.neogrowth.tech.uie.core.api.CategoryApi;
+import com.neogrowth.tech.uie.core.api.ContactUsApi;
 import com.neogrowth.tech.uie.core.api.ManualDataCollectionApi;
 import com.neogrowth.tech.uie.core.config.UieConfiguration;
 import com.neogrowth.tech.uie.service.resources.CategoryResource;
 import com.neogrowth.tech.uie.service.resources.FosResource;
 import com.neogrowth.tech.uie.service.resources.TestResource;
+import com.neogrowth.tech.uie.service.resources.WebResource;
 
 public class UieApplication extends Application<UieConfiguration> {
 
@@ -56,9 +58,12 @@ public class UieApplication extends Application<UieConfiguration> {
 		environment.jersey().register(categoryResource);
 
 		FosResource fosResource = new FosResource(
-				ingestor.getInstance(CategoryApi.class),
 				ingestor.getInstance(ManualDataCollectionApi.class));
 		environment.jersey().register(fosResource);
+
+		WebResource webResource = new WebResource(
+				ingestor.getInstance(ContactUsApi.class));
+		environment.jersey().register(webResource);
 
 		// Health check
 		DBIHealthCheck dbiHealthCheck = new DBIHealthCheck(dbi,

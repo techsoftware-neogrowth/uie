@@ -15,7 +15,6 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import com.google.inject.Inject;
-import com.neogrowth.tech.uie.core.api.CategoryApi;
 import com.neogrowth.tech.uie.core.api.ManualDataCollectionApi;
 import com.neogrowth.tech.uie.data.ManualDataCollection;
 
@@ -26,10 +25,8 @@ public class FosResource {
 	private ManualDataCollectionApi manualDataCollectionApi;
 
 	@Inject
-	public FosResource(CategoryApi categoryApi,
-			ManualDataCollectionApi manualDataCollectionApi) {
+	public FosResource(ManualDataCollectionApi manualDataCollectionApi) {
 		this.manualDataCollectionApi = manualDataCollectionApi;
-
 	}
 
 	@GET
